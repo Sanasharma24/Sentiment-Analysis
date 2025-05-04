@@ -1,95 +1,123 @@
-# Sentiment-Analysis
-This project demonstrates the implementation of sentiment analysis using the RoBERTa model, a state-of-the-art NLP model from Hugging Face's Transformers library. The model is fine-tuned on a Twitter sentiment dataset and is capable of classifying text into positive, neutral, or negative sentiment categories.
-# Sentiment Analysis with RoBERTa
+# 🚦 Sentiment Analysis: Comparing VADER and RoBERTa
 
-## Description
+Welcome! This project explores and compares two powerful approaches to sentiment analysis:  
+- **VADER** (a fast, rule-based model ideal for social media and short texts)  
+- **RoBERTa** (a state-of-the-art deep learning transformer model for nuanced understanding)
 
-This project demonstrates the implementation of sentiment analysis using the RoBERTa model, a state-of-the-art NLP model from Hugging Face's Transformers library. The model is fine-tuned on a Twitter sentiment dataset and is capable of classifying text into positive, neutral, or negative sentiment categories.
+My goal is to **analyze the strengths, weaknesses, and practical differences** between these models when classifying text as **Positive**, **Neutral**, or **Negative**.
 
-## Objectives
+---
 
-1. **Understand and implement sentiment analysis** using the RoBERTa model.
-2. **Learn to work with Hugging Face Transformers** and PyTorch to perform NLP tasks.
-3. **Develop skills in data preprocessing and model evaluation** for sentiment analysis.
+## 🎯 Main Goal
 
-## Features
+To **compare the performance, accuracy, and behavior of VADER and RoBERTa** on the same sentiment analysis tasks, and to provide insights into which model is better suited for different scenarios.
 
-- **Data Preprocessing**: Tokenizes input text using the `AutoTokenizer` from Hugging Face.
-- **Model Inference**: Utilizes `AutoModelForSequenceClassification` for sentiment classification.
-- **Softmax Scoring**: Applies the softmax function to model outputs to obtain probability scores for sentiment classes.
-- **User-friendly**: Easy-to-understand code and well-commented for educational purposes.
+---
 
-## Technologies Used
+## 🧭 How Does It Work?
 
-- **Python**: The programming language used for the entire project.
-- **Hugging Face Transformers**: For model and tokenizer loading.
-- **PyTorch**: For running the RoBERTa model.
-- **Jupyter Notebook**: For interactive development and demonstration of the project.
+1. **Dataset Selection:**  
+   We use the [Amazon Fine Food Reviews dataset](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews), which contains thousands of real-world text reviews and their star ratings.
 
-## Code Example
+2. **Preprocessing:**  
+   - Clean and prepare the text data for analysis.
 
-```python
-# ROBERTA PRETRAINED MODEL
-!pip install torch torchvision torchaudio
-!pip install transformers
+3. **Sentiment Analysis:**  
+   - **VADER:** Uses NLTK’s VADER lexicon for fast, rule-based sentiment scoring.
+   - **RoBERTa:** Uses Hugging Face’s `cardiffnlp/twitter-roberta-base-sentiment` for deep learning-based sentiment classification.
 
-from transformers import AutoTokenizer
-from transformers import AutoModelForSequenceClassification
-from scipy.special import softmax
+4. **Comparison & Evaluation:**  
+   - Run both models on the same reviews.
+   - Compare their predictions, probability scores, and overall accuracy.
+   - Visualize results with charts and tables.
 
-MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
-tokenizer = AutoTokenizer.from_pretrained(MODEL)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+5. **Interpretation:**  
+   - Discuss where each model excels or struggles, and why.
 
-# Function to perform sentiment analysis
-def analyze_sentiment(text):
-    # Tokenize the input text
-    inputs = tokenizer(text, return_tensors='pt')
-    
-    # Get model predictions
-    outputs = model(**inputs)
-    scores = outputs[0][0].detach().numpy()
-    scores = softmax(scores)
-    
-    # Define labels
-    labels = ['Negative', 'Neutral', 'Positive']
-    
-    # Get the sentiment with the highest score
-    sentiment = labels[scores.argmax()]
-    return sentiment, scores
+---
 
-# Example usage
-text = "I love using the RoBERTa model for NLP tasks!"
-sentiment, scores = analyze_sentiment(text)
-print(f"Sentiment: {sentiment}")
-print(f"Scores: {scores}")
-```
+## ✨ Features
 
-## How to Run
+- **Side-by-side sentiment predictions** from VADER and RoBERTa.
+- **Probability/confidence scores** for each sentiment class.
+- **Clear visualizations** to highlight differences in model behavior.
+- **Well-commented, beginner-friendly code** in a Jupyter Notebook.
 
-1. **Clone the repository**:
+---
+
+## 🛠️ Technologies Used
+
+| Technology             | Purpose                                  |
+|-----------------------|------------------------------------------|
+| Python                | Programming language                      |
+| NLTK (VADER)          | Rule-based sentiment analysis             |
+| Hugging Face Transformers (RoBERTa) | Deep learning sentiment analysis |
+| PyTorch               | Model execution for RoBERTa               |
+| Jupyter Notebook      | Interactive coding and visualization      |
+| Matplotlib/Seaborn    | Data visualization                        |
+
+---
+
+## 🚀 How to Run
+
+1. **Clone the repository:**
     ```bash
-    git clone https://github.com/Sanasharma24/sentiment-analysis.git
-    cd sentiment-analysis
+    git clone https://github.com/Sanasharma24/Sentiment-Analysis.git
+    cd Sentiment-Analysis
     ```
 
-2. **Install dependencies**:
+2. **Install dependencies:**
     ```bash
-    pip install torch torchvision torchaudio
-    pip install transformers
+    pip install pandas nltk torch transformers matplotlib scikit-learn jupyter
     ```
 
-3. **Run the Jupyter Notebook**:
+3. **Download NLTK VADER lexicon (first time only):**
+    ```python
+    import nltk
+    nltk.download('vader_lexicon')
+    ```
+
+4. **Launch the Jupyter Notebook:**
     ```bash
     jupyter notebook
     ```
 
-4. **Execute the notebook cells** to see the sentiment analysis in action.
-
-## Contact
-
-For any queries or suggestions, feel free to contact me at sanasharma0424@gmail.com.
+5. **Open `Sentiment_Analysis.ipynb` and run the cells to see the comparison in action!**
 
 ---
 
-This project showcases my ability to implement advanced NLP techniques using modern libraries and tools. I am eager to apply these skills in a challenging internship where I can contribute and grow further.
+## 📝 Example Output
+
+| Review Text                        | VADER Prediction | RoBERTa Prediction |  
+|------------------------------------|------------------|--------------------|  
+| "I love this product!"             | Positive         | Positive           |  
+| "It was okay, nothing special."    | Neutral          | Neutral            |  
+| "Terrible experience, never again" | Negative         | Negative           |  
+
+You’ll see detailed charts and tables in the notebook!
+
+---
+
+## 🔍 What Will You Learn?
+
+- The practical differences between rule-based and deep learning sentiment models.
+- When to use a fast, interpretable model (VADER) vs. a powerful, nuanced model (RoBERTa).
+- How to evaluate and visualize model performance on real-world data.
+
+---
+
+## 📬 Contact
+
+Questions or feedback?  
+📧 Email: sanasharma0424@gmail.com
+
+---
+
+**This project demonstrates my ability to implement, compare, and interpret modern NLP models. I’m excited to apply these skills in real-world data science and AI challenges!**
+
+---
+
+Let me know if you want to add screenshots, sample charts, or further customize this README!
+
+---
+Answer from Perplexity: pplx.ai/share
